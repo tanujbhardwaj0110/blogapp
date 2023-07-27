@@ -1,0 +1,16 @@
+<% unless comment.parent_id || !comment.persisted? %>
+<p>
+  <strong>Comment:</strong>
+  <%= comment.body %>
+  <%= link_to 'reply', new_post_comment_path(@post, parent_id: comment.id), remote: true %>
+</p>
+
+<% if comment.replies.any? %>
+    <% comment.replies.each do |reply| %>
+      <ul>
+        <li><%=reply.body%></li>
+      </ul>
+    <% end %>
+<% end %>
+<div id="reply-form-<%= comment.id %>"></div>
+<% end %>

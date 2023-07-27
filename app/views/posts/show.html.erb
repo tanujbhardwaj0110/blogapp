@@ -1,0 +1,27 @@
+<h1><%= @post.user %></h1>
+<%= image_tag (@post.img), style: "height:250px; ,width: 250px;"%>
+
+
+<ul>
+  <li><%= link_to "Edit", edit_post_path(@post) %></li>
+  <li><%= link_to "Destroy", post_path(@post), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
+</ul>
+
+<div >
+  <div >
+    <p>Comments</p>
+
+    <%= form_with(model: [@post, @post.comments.build]) do |f| %>
+      <div>
+        <%= f.label 'New comment' %>
+        <%= f.text_area :body %>
+      </div>
+      <%= f.submit 'Submit' %>
+    <% end %>
+  </div>
+</div>
+
+<%= render @post.comments %>
