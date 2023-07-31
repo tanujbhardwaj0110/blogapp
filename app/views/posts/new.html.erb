@@ -9,9 +9,9 @@
   <%= form.label :Body %>
   <%= form.text_field :body %>
   <br/>
-  <% if @error_messages && @error_messages.any? %>
+  <% if @error_messages %>
     <div id="error_explanation">
-      <h2><%= pluralize(@error_messages.count, "error") %> prohibited this comment from being saved:</h2>
+      <h2><%= pluralize(@error_messages.count, "error") %> prohibited this post from being saved:</h2>
       <ul>
         <% @error_messages.each do |message| %>
           <li><%= message %></li>

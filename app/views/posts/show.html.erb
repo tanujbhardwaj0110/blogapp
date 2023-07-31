@@ -19,6 +19,8 @@
   </ul>
 <%end%>
 
+
+
 <div >
     <%= form_with(model: [@post, @post.comments.build]) do |f| %>
       <div>
@@ -26,16 +28,9 @@
         <%= f.text_area :body %>
       </div>
       <%= f.submit 'Submit' %>
-      <% if @error_messages.present? && @error_messages.any? %>
-        <h2><%= pluralize(@error_messages.count, "error") %> prohibited this comment from being saved:</h2>
-        <ul>
-          <% @error_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      <% end %>
     <%end%>
 </div>
+<p style = "color: green"><%= notice %></p>
 <br/>
 <strong>Comments  </strong>
 

@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def new
     @user = User.new
+    @error_messages = notice.presence
   end
 
   def create
@@ -8,10 +9,11 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         flash[:notice] = "User created successfully"
-        format.html { redirect_to login_path(), notice: "User created successfully .PLease Login to continue" }
+        format.html { redirect_to login_path(), notice1: "User created successfully .PLease Login to continue" }
         format.json { render :show , status: :created, location: @user}
       else
-        format.html { redirect_to signup_path(), notice: "Password must be greater than 6 characters" }
+        @error_messages = @user.errors.full_messages
+        format.html { redirect_to signup_path(), notice: @error_messages }
       end
     end
   end

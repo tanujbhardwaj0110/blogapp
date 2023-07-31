@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
           format.html { redirect_to @post, notice: 'Comment was successfully created.' }
         else
           @error_messages = @comment.errors.full_messages
-          format.html { render :new }
+          format.html { redirect_to "/new", notice: "Comment body could not be empty."}
         end
       end
     else
