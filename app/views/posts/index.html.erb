@@ -1,14 +1,33 @@
-<%= link_to "New Post", new_post_path %>
 
-
+<p style = "color: green"><%= notice %></p>
 <h1>INSTAGRAM</h1>
+
+
+<% if logged_in? %>
+ <strong>Current User:
+  <%= session[:username] %>
+  <%= link_to "Logout", logout_path %>
+<%else%>
+  <%= link_to "Login" ,login_path() %>
+  <br/>
+  <%= link_to "New User? Create Account" ,signup_path() %>
+<%end%>
+
+<br/>
+
+<% if logged_in? %>
+
+  <%= link_to "New Post", new_post_path %>
+<%end%>
+
+
 
 <ul>
   <% @posts.each do |post| %>
     <li>
     <a href = "/posts/<%= post.id %>">
-      <%= post.user %>
 
+      <%= post.title %>
       <%= image_tag (post.img), style: "height:250px; ,width: 250px;"%>
 
     </li>
