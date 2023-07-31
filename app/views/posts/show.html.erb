@@ -1,27 +1,42 @@
-<h1><%= @post.user %></h1>
+
+
+
+<h1><a href = "http://localhost:3000/posts"> Home</a></h1>
+
+<h1><%= @post.title %></h1>
 <%= image_tag (@post.img), style: "height:250px; ,width: 250px;"%>
+<br/>
+<strong> Body : </strong> <%= @post.body %>
 
 
-<ul>
-  <li><%= link_to "Edit", edit_post_path(@post) %></li>
-  <li><%= link_to "Destroy", post_path(@post), data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  } %></li>
-</ul>
+<% if session[:user_id] == @post.user_id%>
+  <ul>
+    <li><%= link_to "Edit", edit_post_path(@post) %></li>
+    <li><%= link_to "Destroy", post_path(@post), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    } %></li>
+  </ul>
+<%end%>
 
 <div >
-  <div >
-    <p>Comments</p>
-
     <%= form_with(model: [@post, @post.comments.build]) do |f| %>
       <div>
         <%= f.label 'New comment' %>
         <%= f.text_area :body %>
       </div>
       <%= f.submit 'Submit' %>
-    <% end %>
-  </div>
+      <% if @error_messages.present? && @error_messages.any? %>
+        <h2><%= pluralize(@error_messages.count, "error") %> prohibited this comment from being saved:</h2>
+        <ul>
+          <% @error_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    <%end%>
 </div>
+<br/>
+<strong>Comments  </strong>
 
 <%= render @post.comments %>

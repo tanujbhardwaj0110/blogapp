@@ -1,16 +1,17 @@
 <% unless comment.parent_id || !comment.persisted? %>
-<p>
-  <strong>Comment:</strong>
-  <%= comment.body %>
-  <%= link_to 'reply', new_post_comment_path(@post, parent_id: comment.id), remote: true %>
-</p>
+  <p>
+    <strong><%= comment.commenter %></strong>
+    <%= comment.body %>
+    <% if logged_in? %>
+      <%= link_to 'reply', new_post_comment_path(@post, parent_id: comment.id), remote: true %>
+        <%if comment.commenter == session[:username]%>
+          <%= link_to "delete" , post_comment_path(@post ,comment_id: comment.id), data: {
+                            turbo_method: :delete,
+                            turbo_confirm: "Are you sure?"
+                          } %>
+        <%end%>
+    <%end%>
+  </p>
+   <%= render partial: "comments/reply_comments" ,locals: {post: @post , comment: comment} %>
 
-<% if comment.replies.any? %>
-    <% comment.replies.each do |reply| %>
-      <ul>
-        <li><%=reply.body%></li>
-      </ul>
-    <% end %>
-<% end %>
-<div id="reply-form-<%= comment.id %>"></div>
 <% end %>

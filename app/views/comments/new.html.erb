@@ -8,6 +8,13 @@
       <%= f.text_area :body %>
     </div>
     <%= f.submit 'Submit' %>
+    <% if f.object.errors.any? %>
+        <ul>
+          <% f.object.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
     <%= link_to 'Cancel', post_path(@post) %>
   <% end %>
 </div>
