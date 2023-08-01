@@ -5,8 +5,12 @@ class UsersController < ApplicationController
   end
 
   def posts
-    @user = User.find(session[:user_id])
-    @posts = @user.posts.all
+    if logged_in?
+      @user = User.find(session[:user_id])
+      @posts = @user.posts.all
+    else
+      redirect_to "/login" , notice: "You must be logged in to view your posts"
+    end
   end
 
   def create
