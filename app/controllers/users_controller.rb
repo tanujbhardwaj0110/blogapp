@@ -4,6 +4,11 @@ class UsersController < ApplicationController
     @error_messages = notice.presence
   end
 
+  def posts
+    @user = User.find(session[:user_id])
+    @posts = @user.posts.all
+  end
+
   def create
     @user = User.new(user_params)
     respond_to do |format|
