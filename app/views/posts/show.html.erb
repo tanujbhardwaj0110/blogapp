@@ -1,0 +1,38 @@
+
+
+
+<h1><a href = "http://localhost:3000/posts"> Home</a></h1>
+
+<h1><%= @post.title %></h1>
+<%= image_tag (@post.img), style: "height:250px; ,width: 250px;"%>
+<br/>
+<strong> Body : </strong> <%= @post.body %>
+
+
+<% if session[:user_id] == @post.user_id%>
+  <ul>
+    <li><%= link_to "Edit", edit_post_path(@post) %></li>
+    <li><%= link_to "Archive", "/posts/#{@post.id}/softdelete"%> </li>
+    <li><%= link_to "Delete" , post_path(@post), data: {
+                            turbo_method: :delete,
+                            turbo_confirm: "Are you sure?"
+                          } %></li>
+  </ul>
+<%end%>
+
+
+
+<div >
+    <%= form_with(model: [@post, @post.comments.build]) do |f| %>
+      <div>
+        <%= f.label 'New comment' %>
+        <%= f.text_area :body %>
+      </div>
+      <%= f.submit 'Submit' %>
+    <%end%>
+</div>
+<p style = "color: green"><%= notice %></p>
+<br/>
+<strong>Comments  </strong>
+
+<%= render @post.comments %>

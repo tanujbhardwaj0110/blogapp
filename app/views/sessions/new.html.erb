@@ -1,0 +1,22 @@
+<p style = "color: red"><%= notice %></p>
+
+<%= form_with( scope: :session, url: login_path ) do |f| %>
+<div>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+</div>
+
+<div>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+</div>
+<div>
+    <%= f.submit  "Log in"%>
+</div>
+<% end %>
+<%if !flash[:danger].blank? %>
+    <div class="notice">
+	<%= flash[:danger]%>
+    </div>
+<% end %>
+<%= link_to "New User? Create Account" ,signup_path() %>

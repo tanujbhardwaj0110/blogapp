@@ -1,0 +1,27 @@
+
+<h1><a href = "http://localhost:3000/posts"> Home</a></h1>
+<h1>My Posts</h1>
+
+
+<% if @posts.present?%>
+    <ul>
+    <% @posts.each do |post| %>
+
+
+         <li>
+                <%= post.title %>
+                <%= image_tag (post.img), style: "height:100px; ,width: 100px;"%>
+
+        </li>
+        <% if !post.soft %>
+            <%= link_to "Archive", "/posts/#{post.id}/softdelete"%>
+        <%else%>
+            <%= link_to "Unarchive", "/posts/#{post.id}/softdelete"%>
+        <%end%>
+
+    <% end %>
+    </ul>
+<% else %>
+    <h3> You have no posts</h3>
+    <%= link_to "Create your first post" , new_post_path() %>
+<%end%>

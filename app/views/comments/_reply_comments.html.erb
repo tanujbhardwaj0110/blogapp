@@ -1,0 +1,17 @@
+  <% if comment && comment.replies.any? %>
+    <% comment.replies.each do |reply| %>
+      <ul>
+        <li><strong><%=reply.commenter %></strong>: <%=reply.body%></li>
+        <% if logged_in? %>
+          <%= link_to 'reply', new_post_comment_path(@post, parent_id: reply.id), remote: true %>
+            <%if reply.commenter == session[:username]%>
+              <%= link_to "delete" , post_comment_path(@post ,comment_id: reply.id), data: {
+                                turbo_method: :delete,
+                                turbo_confirm: "Are you sure?"
+                              } %>
+            <%end%>
+        <%end%>
+        <%= render partial: "comments/reply_comments" ,locals: {post: @post , comment: reply} %>
+      </ul>
+    <% end %>
+  <% end %>
