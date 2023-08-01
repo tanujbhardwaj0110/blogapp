@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   get "/logout", to: "sessions#destroy"
   get "/user_posts", to: "users#posts"
+  get "/posts/:id/softdelete", to: "posts#softdelete"
   resources :users ,except: [:new]
   resources :posts do
     resources :comments

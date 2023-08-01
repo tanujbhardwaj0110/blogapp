@@ -25,13 +25,15 @@
 
 <ul>
   <% @posts.each do |post| %>
-    <li>
-    <a href = "/posts/<%= post.id %>">
+    <% if !post.soft %>
+      <li>
+      <a href = "/posts/<%= post.id %>">
 
-      <%= post.title %>
-      <%= image_tag (post.img), style: "height:250px; ,width: 250px;"%>
+        <%= post.title %>
+        <%= image_tag (post.img), style: "height:250px; ,width: 250px;"%>
 
-    </li>
+      </li>
+    <%end%>
   <% end %>
 </ul>
 

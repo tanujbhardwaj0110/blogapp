@@ -5,6 +5,9 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    if @post.soft
+      redirect_to '/404.html'
+    end
   end
 
   def new
@@ -15,6 +18,7 @@ class PostsController < ApplicationController
   def create
       @post = Post.new(post_params)
       @post.user_id = session[:user_id]
+      @post.soft = false
       @error_messages = []
 
       if @post.save
@@ -54,7 +58,6 @@ class PostsController < ApplicationController
   end
 
   def destroy
-
     @post = Post.find(params[:id])
     if @post.user_id == session[:user_id]
       @post.destroy
@@ -63,6 +66,18 @@ class PostsController < ApplicationController
       redirect_to "/login"
     end
   end
+
+  def softdelete
+    @post = Post.find(params[:id])
+    if @post.user_id == session[:user_id]
+      soft = !@post.soft
+      @post.update(:soft => soft)
+      redirect_to posts_path()
+    else
+      redirect_to "/login"
+    end
+  end
+
 
   private
   def post_params

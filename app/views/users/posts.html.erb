@@ -1,15 +1,21 @@
 <h1>My Posts</h1>
 
-<% if @posts.present? %>
+<% if @posts.present?%>
     <ul>
     <% @posts.each do |post| %>
-        <li>
-        <a href = "/posts/<%= post.id %>">
 
-        <%= post.title %>
-        <%= image_tag (post.img), style: "height:250px; ,width: 250px;"%>
+
+         <li>
+                <%= post.title %>
+                <%= image_tag (post.img), style: "height:100px; ,width: 100px;"%>
 
         </li>
+        <% if !post.soft %>
+            <%= link_to "Archive", "/posts/#{post.id}/softdelete"%>
+        <%else%>
+            <%= link_to "Unarchive", "/posts/#{post.id}/softdelete"%>
+        <%end%>
+
     <% end %>
     </ul>
 <% else %>
